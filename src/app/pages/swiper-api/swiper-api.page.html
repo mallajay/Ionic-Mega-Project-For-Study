@@ -1,0 +1,187 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Swiper Slider Api</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col
+        size-xs="12"
+        size-sm="12"
+        size-md="8"
+        push-md="2"
+        pull-md="2"
+        size-lg="8"
+        push-lg="2"
+        pull-lg="2"
+        size-xl="8"
+        pull-xl="2"
+        push-xl="2"
+      >
+        <ion-row>
+          <ion-col size="12">
+            <ion-item>
+              <h3>Slider With Arrow</h3>
+            </ion-item>
+          </ion-col>
+          <ion-col size="12">
+            <ion-row>
+              <ion-col size="1">
+                <div
+                  (click)="slidePrev(slideWithNav)"
+                  class="swiper-button-prev"
+                ></div>
+              </ion-col>
+              <ion-col size="10">
+                <ion-slides
+                  class="swiper-container gallery-top"
+                  loop="true"
+                  pager="true"
+                  [options]="slideOptsOne"
+                  #slideWithNav
+                >
+                  <ion-slide *ngFor="let s of sliderOne.slidesItems">
+                    <img src="{{s.image}}" />
+                  </ion-slide>
+                </ion-slides>
+              </ion-col>
+              <ion-col size="1">
+                <div
+                  (click)="slideNext(slideWithNav)"
+                  class="swiper-button-next"
+                ></div>
+              </ion-col>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col size="12">
+            <ion-item>
+              <h3>Slider With Arrow & Progress Pagination</h3>
+            </ion-item>
+          </ion-col>
+          <ion-col size="12">
+            <ion-row>
+              <ion-col size="1">
+                <div
+                  (click)="slidePrev(slideWithNav2)"
+                  class="swiper-button-prev"
+                ></div>
+              </ion-col>
+              <ion-col size="10">
+                <ion-slides
+                  class="swiper-container gallery-top"
+                  pager="true"
+                  [options]="sliderOptsTwo"
+                  #slideWithNav2
+                >
+                  <ion-slide *ngFor="let s of sliderOne.slidesItems">
+                    <img src="{{s.image}}" />
+                  </ion-slide>
+                </ion-slides>
+              </ion-col>
+              <ion-col size="1">
+                <div
+                  (click)="slideNext(slideWithNav2)"
+                  class="swiper-button-next"
+                ></div>
+              </ion-col>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col size="12">
+            <ion-item>
+              <h3>Slider With Loop Mode / Infinite Loop</h3>
+            </ion-item>
+          </ion-col>
+          <ion-col size="12">
+            <ion-row>
+              <ion-col size="1">
+                <div
+                  (click)="slidePrev(slideWithNav3)"
+                  class="swiper-button-prev"
+                ></div>
+              </ion-col>
+
+              <ion-col size="10">
+                <ion-slides
+                  pager="true"
+                  class="swiper-container gallery-top"
+                  [options]="slideOptsThree"
+                  #slideWithNav3
+                >
+                  <ion-slide *ngFor="let s of sliderOne.slidesItems">
+                    <img class="swiper-slide" src="{{s.image}}" />
+                  </ion-slide>
+                </ion-slides>
+                <div class="swiper-pagination"></div>
+              </ion-col>
+
+              <ion-col size="1">
+                <div
+                  (click)="slideNext(slideWithNav3)"
+                  class="swiper-button-next"
+                ></div>
+              </ion-col>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col size="12">
+            <ion-item>
+              <h3>Ionic Thumb Gallary</h3>
+            </ion-item>
+          </ion-col>
+          <ion-col size="12">
+            <ion-row>
+              <ion-col size="12">
+                <ion-slides
+                  class="swiper-container gallery-top"
+                  pager="true"
+                  #slider
+                >
+                  <ion-slide
+                    class="swiper-wrapper"
+                    *ngFor="let image of sliderOne.slidesItems"
+                  >
+                    <img class="swiper-slide" src="{{image.image}}" />
+                  </ion-slide>
+                </ion-slides>
+                <div
+                  (click)="slideNext(slider)"
+                  class="swiper-button-next"
+                ></div>
+                <div
+                  (click)="slidePrev(slider)"
+                  class="swiper-button-prev"
+                ></div>
+                <ion-slides
+                  class="swiper-container gallery-thumbs"
+                  [options]="slideOptsFour"
+                  #thumbnails
+                >
+                  <ion-slide
+                    class="swiper-wrapper"
+                    (click)="slideTo(i)"
+                    *ngFor="let image of sliderOne.slidesItems; let i = index"
+                  >
+                    <img class="swiper-slide" src="{{image.image}}" />
+                  </ion-slide>
+                </ion-slides>
+              </ion-col>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

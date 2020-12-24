@@ -1,0 +1,45 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Ion-Skeleton</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div *ngIf="contentLoaded">
+    <ion-card *ngFor="let item of [].constructor(20)">
+      <ion-card-header>
+        <ion-card-subtitle>Card Subtitle</ion-card-subtitle>
+        <ion-card-title>Card Title</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Incidunt ex
+        iste vero dolor ipsa temporibus praesentium nobis architecto quaerat
+        voluptate ad minima voluptatibus similique quia beatae, quisquam cumque
+        rerum laudantium.
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+  <div *ngIf="!contentLoaded ">
+    <ion-card *ngFor="let item of [].constructor(20)">
+      <ion-card-header>
+        <ion-card-subtitle>
+          <ion-skeleton-text animated style="width: 30%;"></ion-skeleton-text>
+        </ion-card-subtitle>
+        <ion-card-title>
+          <ion-skeleton-text animated style="width: 50%;"></ion-skeleton-text>
+        </ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-skeleton-text animated></ion-skeleton-text>
+        <ion-skeleton-text animated></ion-skeleton-text>
+        <ion-skeleton-text animated></ion-skeleton-text>
+        <ion-skeleton-text animated></ion-skeleton-text>
+        <ion-skeleton-text animated style="width: 30%;"></ion-skeleton-text>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>

@@ -1,0 +1,150 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-back-button slot="start" defaultHref="home"></ion-back-button>
+    <ion-title>Dynamic Reactive Form Very Simple Way</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="12">
+        <form [formGroup]="advanceReactiveForm" autocomplete="on">
+          <ion-row class="ion-justify-content-center">
+            <!-- FirstName -->
+            <ion-col size="12">
+              <ion-item>
+                <ion-label position="floating">First Name</ion-label>
+                <ion-input formControlName="firstName"></ion-input>
+              </ion-item>
+              <div class="error-message" *ngIf="formErrors.firstName.length">
+                <span>{{formErrors.firstName}}</span>
+              </div>
+            </ion-col>
+
+            <!-- Last Name -->
+            <ion-col size="12">
+              <ion-item>
+                <ion-label position="floating">Last Name</ion-label>
+                <ion-input formControlName="lastName"></ion-input>
+              </ion-item>
+              <div class="error-message" *ngIf="formErrors.lastName.length">
+                <span>{{formErrors.lastName}}</span>
+              </div>
+            </ion-col>
+
+            <!-- Email -->
+            <ion-col size="12">
+              <ion-item>
+                <ion-label position="floating">Email</ion-label>
+                <ion-input type="text" formControlName="email"></ion-input>
+              </ion-item>
+              <div class="error-message" *ngIf="formErrors.email.length">
+                <span>{{formErrors.email}}</span>
+              </div>
+            </ion-col>
+
+            <!-- Form Array Add Multiple Friends -->
+            <ion-col size="12">
+              <ion-row class="ion-justify-content-center">
+                <ion-col size="12">
+                  <ion-button color="success" (click)="onAddFriends()">
+                    Add Friends
+                  </ion-button>
+                </ion-col>
+
+                <ion-col size="12" formArrayName="addFriends">
+                  <ion-row
+                    class="ion-justify-content-center"
+                    *ngFor="let friendsControl of advanceReactiveForm.get('addFriends').controls;let i = index"
+                    [formGroupName]="i"
+                  >
+                    <ion-col size="6">
+                      <ion-item>
+                        <ion-label position="floating">Friend Name</ion-label>
+                        <ion-input formControlName="friendName"></ion-input>
+                      </ion-item>
+                    </ion-col>
+
+                    <ion-col size="4">
+                      <ion-item>
+                        <ion-label position="floating">Age</ion-label>
+                        <ion-input
+                          type="number"
+                          formControlName="age"
+                        ></ion-input>
+                      </ion-item>
+                    </ion-col>
+
+                    <!-- Remove Friends -->
+                    <ion-col size="2">
+                      <ion-button (click)="onDeleteFriend(i)" color="danger">
+                        X
+                      </ion-button>
+                    </ion-col>
+                  </ion-row>
+                </ion-col>
+              </ion-row>
+            </ion-col>
+
+            <!-- CheckBox Select Subject -->
+            <ion-col size="12">
+              <ion-list>
+                <ion-item lines="none" slot="start">
+                  <ion-list-header color="warning">
+                    <ion-label class="ion-text-center">
+                      <h2><b>Subject List</b></h2>
+                    </ion-label>
+                  </ion-list-header>
+                </ion-item>
+                <ion-item>
+                  <ion-checkbox
+                    formControlName="selectAll"
+                    color="primary"
+                    slot="start"
+                  ></ion-checkbox>
+                  <ion-label class="ion-text-center">
+                    <h3><b>Select all subject</b></h3>
+                  </ion-label>
+                </ion-item>
+
+                <ion-item
+                  formArrayName="selectSubject"
+                  *ngFor="let SelectedsubjectName of advanceReactiveForm.controls['selectSubject'].controls; let i = index"
+                >
+                  <ion-checkbox
+                    slot="start"
+                    color="primary"
+                    [formControlName]="i"
+                  ></ion-checkbox>
+                  <ion-label>
+                    <h4>{{mySubject[i].subjectName}}</h4>
+                    <p>{{mySubject[i].duration}}</p>
+                  </ion-label>
+                </ion-item>
+              </ion-list>
+            </ion-col>
+
+            <ion-col size="12">
+              <!-- Check is form value is valid or not -->
+              <span
+                *ngIf="!advanceReactiveForm.valid && advanceReactiveForm.touched"
+                class="error-message"
+              >
+                Please enter valid data!
+              </span>
+              <ion-button
+                [disabled]="!advanceReactiveForm.valid"
+                (click)="submitForm()"
+                color="primary"
+                expand="block"
+              >
+                Submit Form
+              </ion-button>
+            </ion-col>
+          </ion-row>
+        </form>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

@@ -1,0 +1,45 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Rxjs-vs-Ionic Event-api</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col
+        size-xs="12"
+        size-sm="12"
+        size-md="8"
+        push-md="2"
+        pull-md="2"
+        size-lg="8"
+        push-lg="2"
+        pull-lg="2"
+        size-xl="8"
+        pull-xl="2"
+        push-xl="2"
+      >
+        <ion-list>
+          <ion-list-header color="primary">
+            <ion-label class="ion-text-center">Ionic Events vs Rxjs</ion-label>
+          </ion-list-header>
+
+          <ion-item lines="none">
+            <ion-label class="ion-text-center">{{count}}</ion-label>
+          </ion-item>
+
+          <ion-button expand="full" color="warning" (click)="incerase()"
+            >Incerase
+          </ion-button>
+          <ion-button expand="full" color="danger" (click)="decrease()"
+            >Decrease</ion-button
+          >
+        </ion-list>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

@@ -1,0 +1,121 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Ionic-Searchable-Select</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col
+        size-xs="12"
+        size-sm="12"
+        size-md="8"
+        push-md="2"
+        pull-md="2"
+        size-lg="8"
+        push-lg="2"
+        pull-lg="2"
+        size-xl="8"
+        pull-xl="2"
+        push-xl="2"
+      >
+        <ion-row>
+          <ion-col size="12">
+            <ion-item>
+              <ion-label>Select Basic User</ion-label>
+              <ionic-selectable
+                [(ngModel)]="selected_users"
+                [items]="users"
+                itemValueField="id"
+                itemTextField="name"
+                [canSearch]="true"
+                (onChange)="portChange($event)"
+              >
+                <ng-template ionicSelectableCloseButtonTemplate>
+                  <ion-icon name="close-circle"></ion-icon>
+                </ng-template>
+              </ionic-selectable>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col size="12">
+            <ion-item>
+              <ion-label>Select Advanced User</ion-label>
+              <ionic-selectable
+                #selectComponent
+                [(ngModel)]="selected"
+                [items]="users"
+                itemValueField="id"
+                itemTextField="name"
+                [isMultiple]="true"
+                headerColor="primary"
+                searchFailText="Nothing Found :("
+              >
+                <ng-template ionicSelectableCloseButtonTemplate>
+                  <ion-icon name="close-circle"></ion-icon>
+                </ng-template>
+
+                <ng-template ionicSelectableTitleTemplate>
+                  Custom Title
+                </ng-template>
+
+                <ng-template ionicSelectableItemTemplate let-user="item">
+                  {{user.name}} ({{user.country}})
+                </ng-template>
+
+                <ng-template ionicSelectableFooterTemplate>
+                  <ion-footer>
+                    <ion-row class="ion-text-center">
+                      <ion-col size="4">
+                        <ion-button fill="clear" (click)="clear()"
+                          >Clear</ion-button
+                        >
+                      </ion-col>
+                      <ion-col size="4">
+                        <ion-button fill="clear" (click)="toggleItem()"
+                          >Toggle</ion-button
+                        >
+                      </ion-col>
+                      <ion-col size="4">
+                        <ion-button fill="clear" (click)="confirm()"
+                          >Confirm
+                        </ion-button>
+                      </ion-col>
+                    </ion-row>
+                  </ion-footer>
+                </ng-template>
+              </ionic-selectable>
+            </ion-item>
+            <ion-button (click)="openFormCode()"> Open Form Code </ion-button>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col size="12">
+            <ion-item>
+              <ion-label>Group Example</ion-label>
+              <ionic-selectable
+                [(ngModel)]="group"
+                [items]="groups"
+                itemValueField="id"
+                itemTextField="name"
+                groupValueField="type"
+                groupTextField="type"
+              >
+                <ng-template ionicSelectableGroupTemplate let-group="group">
+                  {{group.text}}
+                </ng-template>
+              </ionic-selectable>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

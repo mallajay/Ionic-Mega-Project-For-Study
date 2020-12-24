@@ -1,0 +1,328 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Dynamic Reactive Form</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="myClaimForm" autocomplete="off">
+    <ion-row>
+      <ion-col>
+        <ion-item>
+          <ion-label>Expense Type</ion-label>
+          <ion-select
+            formControlName="expenseType"
+            (ionChange)="onChange($event)"
+            type="string"
+          >
+            <ion-select-option value="hotelExpenses"
+              >Hotel Expense</ion-select-option
+            >
+            <ion-select-option value="communications"
+              >Communications</ion-select-option
+            >
+            <ion-select-option value="entertainment"
+              >Entertainment</ion-select-option
+            >
+            <ion-select-option value="fees">Fees</ion-select-option>
+            <ion-select-option value="businessMeals"
+              >Business Meals</ion-select-option
+            >
+            <ion-select-option value="individualMeals"
+              >Individual Meals</ion-select-option
+            >
+            <ion-select-option value="officeExpenses"
+              >Office Expenses</ion-select-option
+            >
+            <ion-select-option value="thirdPartyServices"
+              >Third Party Services</ion-select-option
+            >
+            <ion-select-option value="transportation"
+              >Transportation</ion-select-option
+            >
+            <ion-select-option value="travelExpense"
+              >Travel Expense</ion-select-option
+            >
+            <ion-select-option value="miscellaneous"
+              >Miscellaneous</ion-select-option
+            >
+          </ion-select>
+        </ion-item>
+
+        <div
+          *ngIf="expenseType.touched && expenseType.invalid"
+          class="error-message"
+        >
+          {{ formError.expenseType }}
+        </div>
+      </ion-col>
+
+      <!-- hotelName -->
+      <ion-col size="12">
+        <ion-item
+          *ngIf="selectedType == 'hotelExpenses' 
+             || selectedType == 'predefined' || selectedType == 'businessMeals'"
+        >
+          <ion-label position="floating">Hotel Name</ion-label>
+          <ion-input type="text" formControlName="hotelName"></ion-input>
+        </ion-item>
+        <div
+          *ngIf="hotelName.touched && hotelName.invalid"
+          class="error-message"
+        >
+          {{ formError.hotelName }}
+        </div>
+      </ion-col>
+
+      <!-- city Name -->
+      <ion-col size="12">
+        <ion-item
+          *ngIf="selectedType == 'hotelExpenses' || selectedType == 'predefined'"
+        >
+          <ion-label position="floating">City Name</ion-label>
+          <ion-input type="text" formControlName="city"></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <!-- Meal Attendees Form -->
+    <ion-row *ngIf="selectedType == 'businessMeals'">
+      <div class="card-body" formArrayName="newAttendes">
+        <div *ngFor="let contact of mealAttendees.controls; let i = index">
+          <div [formGroupName]="i" class="row">
+            <!-- attendeeType -->
+            <ion-row class="mealAtten-style">
+              <ion-col size="12">
+                <ion-item>
+                  <ion-label>Attendee Type</ion-label>
+                  <ion-select
+                    (ionChange)="onSelect($event)"
+                    formControlName="attendeeType"
+                    type="string"
+                  >
+                    <ion-select-option value="employee"
+                      >Employee</ion-select-option
+                    >
+                    <ion-select-option value="spouse">Spouse</ion-select-option>
+                    <ion-select-option value="partner"
+                      >Partner</ion-select-option
+                    >
+                  </ion-select>
+                  <ion-buttons slot="end">
+                    <ion-button type="button" (click)="removeContact(i)">
+                      <ion-icon color="danger" name="trash"></ion-icon>
+                    </ion-button>
+                    <ion-button type="button" (click)="addAttendees()">
+                      <ion-icon color="primary" name="add-circle"></ion-icon>
+                    </ion-button>
+                  </ion-buttons>
+                </ion-item>
+              </ion-col>
+
+              <!-- employeeId -->
+              <ion-col
+                size-xs="12"
+                size-sm="12"
+                size-md="12"
+                size-lg="12"
+                size-xl="12"
+              >
+                <ion-item
+                  *ngIf="attendesType == 'employee' || attendesType == '!spouse' || attendesType == '!partner' "
+                >
+                  <ion-label position="floating">Employee Id</ion-label>
+                  <ion-input
+                    class="form-control"
+                    formControlName="employeeId"
+                    type="string"
+                  >
+                  </ion-input>
+                </ion-item>
+              </ion-col>
+
+              <!-- attendeeTitle -->
+              <ion-col
+                size-xs="12"
+                size-sm="4"
+                size-md="3"
+                size-lg="3"
+                size-xl="3"
+              >
+                <ion-item
+                  *ngIf="attendesType == 'spouse' || attendesType == 'partner'"
+                >
+                  <ion-label position="floating">Title</ion-label>
+                  <ion-select formControlName="attendeeTitle" type="string">
+                    <ion-select-option value="Mr.">Mr.</ion-select-option>
+                    <ion-select-option value="Mrs.">Mrs.</ion-select-option>
+                    <ion-select-option value="Ms.">Ms.</ion-select-option>
+                  </ion-select>
+                </ion-item>
+              </ion-col>
+
+              <!-- firstName -->
+              <ion-col
+                size-xs="12"
+                size-sm="4"
+                size-md="3"
+                size-lg="3"
+                size-xl="3"
+              >
+                <ion-item
+                  *ngIf="attendesType == 'spouse' || attendesType == 'partner'"
+                >
+                  <ion-label position="floating">First Name</ion-label>
+                  <ion-input
+                    class="form-control"
+                    formControlName="firstName"
+                    type="text"
+                  ></ion-input>
+                </ion-item>
+              </ion-col>
+
+              <!-- lastName -->
+              <ion-col
+                size-xs="12"
+                size-sm="4"
+                size-md="3"
+                size-lg="3"
+                size-xl="3"
+              >
+                <ion-item
+                  *ngIf="attendesType == 'spouse' || attendesType == 'partner'"
+                >
+                  <ion-label position="floating">Last Name</ion-label>
+                  <ion-input
+                    class="form-control"
+                    formControlName="lastName"
+                    type="text"
+                  >
+                  </ion-input>
+                </ion-item>
+              </ion-col>
+
+              <!-- sex -->
+              <ion-col
+                size-xs="12"
+                size-sm="4"
+                size-md="3"
+                size-lg="3"
+                size-xl="3"
+              >
+                <ion-item
+                  *ngIf="attendesType == 'spouse' || attendesType == 'partner'"
+                >
+                  <ion-label position="floating">Gender</ion-label>
+                  <ion-select formControlName="sex" type="string">
+                    <ion-select-option value="f">Female</ion-select-option>
+                    <ion-select-option value="m">Male</ion-select-option>
+                  </ion-select>
+                </ion-item>
+              </ion-col>
+
+              <!-- company -->
+              <ion-col
+                size-xs="12"
+                size-sm="4"
+                size-md="3"
+                size-lg="3"
+                size-xl="3"
+              >
+                <ion-item
+                  *ngIf="attendesType == 'spouse' || attendesType == 'partner'"
+                >
+                  <ion-label position="floating">Company Name</ion-label>
+                  <ion-input
+                    class="form-control"
+                    formControlName="company"
+                    type="text"
+                  >
+                  </ion-input>
+                </ion-item>
+              </ion-col>
+
+              <!-- age -->
+              <ion-col
+                size-xs="12"
+                size-sm="4"
+                size-md="3"
+                size-lg="3"
+                size-xl="3"
+              >
+                <ion-item
+                  *ngIf="attendesType == 'spouse' || attendesType == 'partner'"
+                >
+                  <ion-label position="floating">Age</ion-label>
+                  <ion-input
+                    class="form-control"
+                    formControlName="age"
+                    type="Number"
+                  >
+                  </ion-input>
+                </ion-item>
+              </ion-col>
+
+              <!-- dateOfBirth -->
+              <ion-col
+                size-xs="12"
+                size-sm="4"
+                size-md="3"
+                size-lg="3"
+                size-xl="3"
+              >
+                <ion-item
+                  *ngIf="attendesType == 'spouse' || attendesType == 'partner'"
+                >
+                  <ion-label position="floating">Date Of Birth</ion-label>
+                  <ion-datetime
+                    type="string"
+                    formControlName="dateOfBirth"
+                    displayFormat="MMM DD, YYYY"
+                    min="1947"
+                    max="2099"
+                    value="string"
+                  ></ion-datetime>
+                </ion-item>
+              </ion-col>
+
+              <!-- panNo -->
+              <ion-col
+                size-xs="12"
+                size-sm="4"
+                size-md="3"
+                size-lg="3"
+                size-xl="3"
+              >
+                <ion-item
+                  *ngIf="attendesType == 'spouse' || attendesType == 'partner'"
+                >
+                  <ion-label position="floating">Pan No</ion-label>
+                  <ion-input
+                    class="form-control"
+                    formControlName="panNo"
+                    type="string"
+                  >
+                  </ion-input>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+          </div>
+        </div>
+      </div>
+    </ion-row>
+  </form>
+
+  <ion-button
+    color="secondary"
+    expand="block"
+    class="ion-margin-top"
+    [disabled]="!myClaimForm.valid"
+    (click)="addExpenseHeader()"
+  >
+    Add Claim
+    <ion-spinner name="dots" *ngIf="showAddClaimSpinner"></ion-spinner>
+  </ion-button>
+</ion-content>
